@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Product } from "@/types/ProductType";
 import { Button } from "./ui/button";
+import { ProductImage } from "./ProductImage";
 
 type ProductProps = {
   product: Product;
@@ -19,12 +20,13 @@ export function ProductCard({ product }: ProductProps) {
   return (
     <Card className="flex flex-col text-gray-300">
       <CardContent className="flex flex-col flex-1">
-        <div className="relative max-h-72 flex-1">
-          img
+        <div className="relative flex-1">
+          <ProductImage fill={!image} src={image} title={title} />
         </div>
 
-        <CardHeader>
-          <CardTitle>{title}</CardTitle>
+        <CardHeader className="flex-row space-y-0 items-center justify-between">
+          <CardTitle className="w-40 truncate">{title}</CardTitle>
+          <CardDescription className="text-sm font-bold text-teal-300">{price}</CardDescription>
         </CardHeader>
       </CardContent>
       <CardFooter>
