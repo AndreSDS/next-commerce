@@ -1,5 +1,7 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { SignInButton, UserButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { Button } from "./ui/button";
 
 export const Navbar = ({
   className,
@@ -19,6 +21,19 @@ export const Navbar = ({
       >
         Next Store
       </Link>
+
+      <div className="flex items-center gap-8">
+        <SignedIn>
+          {/* Mount the UserButton component */}
+          <UserButton />
+        </SignedIn>
+        <SignedOut>
+          {/* Signed out users get sign in button */}
+          <SignInButton mode="modal">
+            <Button>Sign in</Button>
+          </SignInButton>
+        </SignedOut>
+      </div>
     </nav>
   );
 };
