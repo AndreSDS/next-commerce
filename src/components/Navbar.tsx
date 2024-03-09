@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { SignInButton, UserButton, SignedIn, SignedOut } from "@clerk/nextjs";
 import { Button } from "./ui/button";
+import { Cart } from "./Cart";
 
 export const Navbar = ({
   className,
@@ -23,6 +24,7 @@ export const Navbar = ({
       </Link>
 
       <div className="flex items-center gap-8">
+        <Cart />
         <SignedIn>
           {/* Mount the UserButton component */}
           <UserButton />
