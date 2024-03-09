@@ -1,16 +1,32 @@
 import { ProductCard } from "@/components/Product";
 import { Product } from "@/types/ProductType";
 import Image from "next/image";
+import Stripe from "stripe";
 
 async function getData(): Promise<Product[]> {
-  const res = await fetch("https://fakestoreapi.com/products");
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+    apiVersion: "2023-10-16",
+  });
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch data from the API");
-  }
+  const products = await stripe.products.list();
+  const formatedProducts = await Promise.all(
+    products.data.map(async (product) => {
+      const price = await stripe.prices.list({
+        product: product.id,
+      });
 
-  const json = await res.json();
-  return json;
+      return {
+        id: product.id,
+        price: price.data[0].unit_amount || 0,
+        name: product.name,
+        image: product.images[0],
+        description: product.description || "",
+        currency: price.data[0].currency,
+      };
+    })
+  )
+
+  return formatedProducts;
 }
 
 export default async function Home() {
