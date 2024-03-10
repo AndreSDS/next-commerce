@@ -1,4 +1,4 @@
-import Image from "next/image";
+"use client";
 import {
   Card,
   CardContent,
@@ -8,9 +8,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Product } from "@/types/ProductType";
-import { Button } from "./ui/button";
 import { ProductImage } from "./ProductImage";
 import { formatCurrency } from "@/lib/utils";
+import { AddToCartButton } from "./AddToCartButton";
 
 type ProductProps = {
   product: Product;
@@ -28,11 +28,13 @@ export function ProductCard({ product }: ProductProps) {
 
         <CardHeader className="flex-row space-y-0 items-center justify-between">
           <CardTitle className="w-40 truncate">{name}</CardTitle>
-          <CardDescription className="text-sm font-bold text-teal-300">{formattedPrice}</CardDescription>
+          <CardDescription className="text-sm font-bold text-teal-300">
+            {formattedPrice}
+          </CardDescription>
         </CardHeader>
       </CardContent>
       <CardFooter>
-        <Button>Adicionar ao Carrinho</Button>
+        <AddToCartButton product={product} />
       </CardFooter>
     </Card>
   );

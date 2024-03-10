@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Drawer,
   DrawerClose,
@@ -10,10 +12,13 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
+import { useCartStore } from "@/store/store";
 
 export function Cart() {
+  const {cart, removeProduct} = useCartStore();
+
   return (
-    <Drawer>
+    <Drawer direction="right">
       <DrawerTrigger asChild className="cursor-pointer">
         <div className="relative">
           <svg
@@ -33,14 +38,17 @@ export function Cart() {
             <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
           </svg>
 
-          <Badge className="absolute bg-teal-600 -top-2 -right-4">0</Badge>
+          <Badge className="absolute bg-teal-600 -top-2 -right-4">{cart.length}</Badge>
         </div>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-          <DrawerDescription>This action cannot be undone.</DrawerDescription>
+          <DrawerTitle className="text-slate-300">Meu Carrinho</DrawerTitle>
         </DrawerHeader>
+
+        {cart.map((product) => (
+          <div key={product.id}>{product.name} {product.quantity}</div>
+        ))}
         <DrawerFooter>
           <Button>Submit</Button>
           <DrawerClose>
