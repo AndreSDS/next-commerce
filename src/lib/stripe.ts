@@ -20,6 +20,7 @@ export async function getProducts(): Promise<Product[]> {
         image: product.images[0],
         description: product.description || "",
         currency: price.data[0].currency,
+        quantity: 0,
       };
     })
   );
